@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import AppBar from "../components/AppBar";
 
-export default function Promotional() {
+export default function Promotional({ navigation }) {
   return (
     <View>
-      <Text>Promotional</Text>
+      <AppBar title={"Promocional"} navigation={navigation} />
     </View>
   );
 }
