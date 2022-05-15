@@ -8,6 +8,8 @@ import Promotional from "./page/Promotional";
 import Analytics from "./page/Analytics";
 import CustomDrawer from "./components/CustomDrawer";
 import theme from "./utils/theme";
+import ServiceInfo from "./page/ServiceInfo";
+import ServiceAdd from "./page/ServiceAdd";
 
 const Drawer = createDrawerNavigator();
 
@@ -31,6 +33,8 @@ export default function App() {
             <Drawer.Screen name="Services" component={Services} />
             <Drawer.Screen name="Promotional" component={Promotional} />
             <Drawer.Screen name="Analytics" component={Analytics} />
+            <Drawer.Screen name="ServiceInfo" component={ServiceInfo} />
+            <Drawer.Screen name="ServiceAdd" component={ServiceAdd} />
           </Drawer.Navigator>
         </NavigationContainer>
       </PaperProvider>
