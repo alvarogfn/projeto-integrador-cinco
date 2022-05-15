@@ -1,21 +1,27 @@
+import { DefaultTheme, configureFonts } from "react-native-paper";
+
 const fontConfig = {
   default: {
-    // regular: {
-    //   fontFamily: "roboto",
-    //   fontWeight: "regular",
-    // },
-    medium: {
-      fontFamily: "Roboto_500Medium",
-      fontWeight: "medium",
+    bold: {
+      fontFamily: "Roboto",
+      fontWeight: "900",
     },
-    // light: {
-    //   fontFamily: "Lato-Light",
-    //   fontWeight: "normal",
-    // },
-    // thin: {
-    //   fontFamily: "Lato-Thin",
-    //   fontWeight: "normal",
-    // },
+    regular: {
+      fontFamily: "Roboto",
+      fontWeight: "400",
+    },
+    medium: {
+      fontFamily: "Roboto",
+      fontWeight: "500",
+    },
+    light: {
+      fontFamily: "Roboto",
+      fontWeight: "200",
+    },
+    thin: {
+      fontFamily: "Roboto",
+      fontWeight: "100",
+    },
   },
 };
 
@@ -25,9 +31,10 @@ fontConfig.android = fontConfig.default;
 const theme = {
   ...DefaultTheme,
   colors: {
+    ...DefaultTheme.colors,
     primary: "#ECBBAC",
     accent: "#3A6450",
-    text: "#99000000",
+    text: "#000000",
   },
   fonts: configureFonts(fontConfig),
 };
