@@ -10,8 +10,9 @@ import {
   Avatar,
   Searchbar,
   Surface,
+  Divider,
 } from "react-native-paper";
-import styles, { colors } from "../utils/styles";
+import main, { colors } from "../utils/styles";
 
 export default function Services({ navigation, route }) {
   const [showSnackBar, setShowSnackBar] = React.useState(
@@ -46,38 +47,43 @@ export default function Services({ navigation, route }) {
 
   return (
     <React.Fragment>
-      <View style={container.app}>
+      <View style={styles.app}>
         <AppBar title="SERVIÇOS" navigation={navigation}></AppBar>
         <View style={{ padding: 20 }}>
           <Button
             icon={"plus-outline"}
-            style={styles.button}
-            labelStyle={styles.textButton}
+            style={main.button}
+            labelStyle={main.textButton}
             mode={"contained"}
             onPress={() => navigation.jumpTo("ServiceAdd")}
           >
             ADICIONAR NOVO
           </Button>
         </View>
-        <View style={container.list}>
-          <Text style={styles.title}>LISTA DE PRODUTOS</Text>
+        <View style={styles.list}>
+          <Text style={{ ...main.title, marginBottom: 10 }}>
+            LISTA DE PRODUTOS
+          </Text>
           <Surface
             style={{
-              ...styles.serviceListCard,
+              flexBasis: 200,
               flexGrow: 1,
-              maxHeight: "100%",
+              borderRadius: 10,
+              padding: 10,
+              margin: 10,
             }}
           >
-            <View style={container.loading}>
-              {serviceList ? (
-                <ServiceList
-                  serviceList={serviceList}
-                  navigation={navigation}
-                />
-              ) : (
+            <Searchbar
+              style={{ padding: 5, margin: 5, marginBottom: 20 }}
+              theme={{ colors: { primary: colors.primary } }}
+            />
+            {serviceList !== null ? (
+              <ServiceList serviceList={serviceList} navigation={navigation} />
+            ) : (
+              <View style={styles.loading}>
                 <ActivityIndicator color={colors.primary} size="large" />
-              )}
-            </View>
+              </View>
+            )}
           </Surface>
         </View>
       </View>
@@ -112,44 +118,44 @@ const ServiceList = ({ navigation, serviceList }) => {
       keyExtractor={() => Math.random()}
       style={{
         flexGrow: 1,
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingRight: 10,
         width: "100%",
-        maxHeight: 200,
       }}
       renderItem={({ item }) => {
         return (
-          <List.Item
-            style={styles.serviceListCard}
-            titleStyle={styles.listTextContent}
-            title={item.name}
-            onPress={() => console.log("ola")}
-            right={(props) => (
-              <IconButton
-                style={styles.listCardAvatar}
-                size={35}
-                icon="square-edit-outline"
-                color={colors.primary}
-                onPress={() =>
-                  navigation.navigate("ServiceAdd", { serviceData: item })
-                }
-              />
-            )}
-            left={(props) => (
-              <Avatar.Image
-                {...props}
-                color={"transparent"}
-                source={{ uri: item.img }}
-              />
-            )}
-          />
+          <React.Fragment>
+            <List.Item
+              titleStyle={{ color: colors.textBlack }}
+              title={item.name}
+              onPress={() => console.log("ola")}
+              right={(props) => (
+                <IconButton
+                  style={main.listCardAvatar}
+                  size={35}
+                  icon="square-edit-outline"
+                  color={colors.primary}
+                  onPress={() =>
+                    navigation.navigate("ServiceAdd", { serviceData: item })
+                  }
+                />
+              )}
+              left={(props) => (
+                <Avatar.Image
+                  {...props}
+                  color={"transparent"}
+                  source={{ uri: item.img }}
+                />
+              )}
+            />
+            <Divider />
+          </React.Fragment>
         );
       }}
     />
   );
 };
 
-const container = StyleSheet.create({
+const styles = StyleSheet.create({
   app: {
     display: "flex",
     flexDirection: "column",
@@ -158,10 +164,9 @@ const container = StyleSheet.create({
   },
   list: {
     flexGrow: 1,
-    height: 200,
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: "column",
+    justifyContent: "flex-start",
   },
   loading: {
     display: "flex",

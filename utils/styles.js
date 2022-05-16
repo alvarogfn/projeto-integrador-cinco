@@ -60,9 +60,6 @@ export default StyleSheet.create({
   listCardAvatar: {
     alignSelf: "center",
   },
-  listTextContent: {
-    color: "#000000",
-  },
   borderTest: {
     borderWidth: 2,
     borderStyle: "solid",

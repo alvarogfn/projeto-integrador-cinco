@@ -5,7 +5,12 @@ import { Appbar } from "react-native-paper";
 import styles from "../utils/styles";
 
 export default function ServiceAdd({ navigation, route }) {
-  const [serviceData, setServiceData] = React.useState({ name: null });
+  const [serviceData, setServiceData] = React.useState({
+    name: null,
+    description: null,
+    price: null,
+    redirect: null,
+  });
 
   React.useEffect(() => {
     const serviceData = route?.params?.serviceData;
@@ -27,11 +32,24 @@ export default function ServiceAdd({ navigation, route }) {
       <View style={{ padding: 20 }}>
         <Input
           label={"Nome"}
-          placeholder="Escreva o título do seu serviço."
+          placeholder="Dê um nome ao serviço."
           value={serviceData.name}
           onChangeText={(text) => onChangeText({ name: text })}
         />
-        <Input label="Descrição" />
+        <Input
+          label="Descrição"
+          placeholder="Descreva qual é o serviço."
+          value={serviceData.description}
+          onChangeText={(text) => onChangeText({ description: text })}
+          multiline={true}
+          numberOfLines={6}
+        />
+        <Input
+          label="Preço"
+          placeholder="Quanto custa o serviço?"
+          value={serviceData.price}
+          onChangeText={(text) => onChangeText({ price: text })}
+        />
       </View>
     </View>
   );
