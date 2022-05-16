@@ -27,9 +27,10 @@ export default StyleSheet.create({
     padding: 7.5,
   },
   title: {
-    fontWeight: "800",
+    fontWeight: "900",
     fontSize: 30,
     textAlign: "center",
+    textTransform: "capitalize",
   },
   centralize: {
     display: "flex",
