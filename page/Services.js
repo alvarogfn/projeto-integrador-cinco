@@ -62,7 +62,7 @@ export default function Services({ navigation, route }) {
         </View>
         <View style={styles.list}>
           <Text style={{ ...main.title, marginBottom: 10 }}>
-            LISTA DE PRODUTOS
+            LISTA DE SERVIÇOS
           </Text>
           <Surface
             style={{
