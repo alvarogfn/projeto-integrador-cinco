@@ -24,7 +24,6 @@ export default function App() {
       <PaperProvider>
         <NavigationContainer>
           <Drawer.Navigator
-            useLegacyImplementation
             screenOptions={{ headerShown: false }}
             drawerContent={(props) => <CustomDrawer {...props} theme={theme} />}
             initialRouteName="Services"

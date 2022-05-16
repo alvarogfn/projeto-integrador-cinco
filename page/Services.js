@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import React from "react";
 import AppBar from "../components/AppBar";
 import {
@@ -7,11 +7,11 @@ import {
   ActivityIndicator,
   List,
   IconButton,
-  Divider,
   Avatar,
+  Searchbar,
+  Surface,
 } from "react-native-paper";
 import styles, { colors } from "../utils/styles";
-import ServiceAdd from "./ServiceAdd";
 
 export default function Services({ navigation, route }) {
   const [showSnackBar, setShowSnackBar] = React.useState(
@@ -46,7 +46,7 @@ export default function Services({ navigation, route }) {
 
   return (
     <React.Fragment>
-      <View style={{ position: "relative" }}>
+      <View style={container.app}>
         <AppBar title="SERVIÇOS" navigation={navigation}></AppBar>
         <View style={{ padding: 20 }}>
           <Button
@@ -59,15 +59,26 @@ export default function Services({ navigation, route }) {
             ADICIONAR NOVO
           </Button>
         </View>
-        <View style={styles.centralize}>
+        <View style={container.list}>
           <Text style={styles.title}>LISTA DE PRODUTOS</Text>
-          <View style={{ paddingTop: 30, width: "90%" }}>
-            {serviceList ? (
-              <ServiceList serviceList={serviceList} navigation={navigation} />
-            ) : (
-              <ActivityIndicator color={colors.primary} size="large" />
-            )}
-          </View>
+          <Surface
+            style={{
+              ...styles.serviceListCard,
+              flexGrow: 1,
+              maxHeight: "100%",
+            }}
+          >
+            <View style={container.loading}>
+              {serviceList ? (
+                <ServiceList
+                  serviceList={serviceList}
+                  navigation={navigation}
+                />
+              ) : (
+                <ActivityIndicator color={colors.primary} size="large" />
+              )}
+            </View>
+          </Surface>
         </View>
       </View>
       <Snackbar
@@ -81,9 +92,9 @@ export default function Services({ navigation, route }) {
         Você adicionou o serviço:
         <Text
           style={{
-            fontWeight: 700,
-            display: "block",
-            textTransform: "Capitalize",
+            fontWeight: "700",
+            display: "flex",
+            textTransform: "capitalize",
           }}
         >
           {serviceName}
@@ -97,6 +108,15 @@ const ServiceList = ({ navigation, serviceList }) => {
   return (
     <FlatList
       data={serviceList}
+      scrollEnabled={true}
+      keyExtractor={() => Math.random()}
+      style={{
+        flexGrow: 1,
+        paddingTop: 10,
+        paddingBottom: 10,
+        width: "100%",
+        maxHeight: 200,
+      }}
       renderItem={({ item }) => {
         return (
           <List.Item
@@ -110,7 +130,9 @@ const ServiceList = ({ navigation, serviceList }) => {
                 size={35}
                 icon="square-edit-outline"
                 color={colors.primary}
-                onPress={() => navigation.navigate("ServiceAdd")}
+                onPress={() =>
+                  navigation.navigate("ServiceAdd", { serviceData: item })
+                }
               />
             )}
             left={(props) => (
@@ -123,7 +145,28 @@ const ServiceList = ({ navigation, serviceList }) => {
           />
         );
       }}
-      keyExtractor={() => Math.random()}
     />
   );
 };
+
+const container = StyleSheet.create({
+  app: {
+    display: "flex",
+    flexDirection: "column",
+    flexGrow: 1,
+    maxHeight: "100%",
+  },
+  list: {
+    flexGrow: 1,
+    height: 200,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  loading: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+  },
+});

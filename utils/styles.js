@@ -14,7 +14,6 @@ export default StyleSheet.create({
   appBarText: {
     color: colors.textWhite,
     fontWeight: "500",
-    letterSpacing: "0.15px",
     fontSize: 20,
     textTransform: "capitalize",
   },
@@ -24,12 +23,13 @@ export default StyleSheet.create({
   },
   textButton: {
     color: colors.textWhite,
-    fontWeight: 600,
+    fontWeight: "600",
     padding: 7.5,
   },
   title: {
-    fontWeight: "bold",
+    fontWeight: "800",
     fontSize: 30,
+    textAlign: "center",
   },
   centralize: {
     display: "flex",
@@ -54,18 +54,19 @@ export default StyleSheet.create({
     flexWrap: "nowrap",
   },
   serviceListCard: {
-    display: "flex",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    marginBottom: 10,
-    borderRadius: 5,
-    padding: 5,
+    width: "90%",
+    maxHeight: "100%",
   },
   listCardAvatar: {
     alignSelf: "center",
   },
   listTextContent: {
     color: "#000000",
+  },
+  borderTest: {
+    borderWidth: 2,
+    borderStyle: "solid",
+    borderColor: "#FF0000",
   },
 });
 
