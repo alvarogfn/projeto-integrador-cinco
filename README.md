@@ -32,21 +32,21 @@ npm start
 <div>
 
 **Drawer para navegação entre telas:**
-<img src="https://i.imgur.com/Wb0bs2a.png">
+<img src="https://i.imgur.com/Wb0bs2a.png" width="250px">
 
 </div>
 
 <div>
 
 **Tela com listagem de produtos:**
-<img src="https://imgur.com/AN3NL0I.png">
+<img src="https://imgur.com/AN3NL0I.png" width="250px">
 
 </div>
 
 <div>
 
 **Tela para adicionar produtos:**
-<img src="https://imgur.com/7wRKxB2.png">
+<img src="https://imgur.com/7wRKxB2.png" width="250px">
 
 </div>
 
