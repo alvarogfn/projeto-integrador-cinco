@@ -3,7 +3,6 @@ import React from "react";
 import AppBar from "../components/AppBar";
 import {
   Button,
-  Snackbar,
   ActivityIndicator,
   List,
   IconButton,
@@ -13,37 +12,51 @@ import {
   Divider,
 } from "react-native-paper";
 import main, { colors } from "../utils/styles";
+import Snackbar from "../components/Snackbar";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Services({ navigation, route }) {
-  const [showSnackBar, setShowSnackBar] = React.useState(
-    route?.params?.serviceName !== undefined
-  );
-
-  const [serviceName, setServiceName] = React.useState("");
-
+  const [snackBar, setSnackbar] = React.useState(false);
   const [serviceList, setServiceList] = React.useState(undefined);
+  const [snackbarMessage, setSnackBarMessage] = React.useState(null);
 
   async function getServicesList() {
     const response = await fetch(
-      "https://projeto-integrador-5-default-rtdb.firebaseio.com/product.json"
+      "https://projeto-integrador-5-default-rtdb.firebaseio.com/services.json"
     );
     const json = await response.json();
-
+    if (json === null || response.status !== 200) throw new Error("");
     return json;
   }
 
   React.useEffect(() => {
-    getServicesList().then((r) => setServiceList(r));
-  }, []);
-
-  React.useEffect(() => {
-    const serviceName = route?.params?.serviceName;
-
-    if (serviceName !== undefined) {
-      setShowSnackBar(true);
-      setServiceName(serviceName);
+    const snackbar = route?.params?.snackbar;
+    if (snackbar) {
+      setSnackbar(true);
+      setSnackBarMessage(() => {
+        return (
+          <View style={{ display: "flex", flexDirection: "column" }}>
+            <Text style={{ fontWeight: "900", color: "#FFFFFF" }}>
+              {snackbar.title}
+            </Text>
+            <Text style={{ color: "#FFFFFF" }}>{snackbar.description}</Text>
+          </View>
+        );
+      });
     }
-  }, [route, setShowSnackBar, setServiceName]);
+  }, [route, setSnackbar]);
+
+  useFocusEffect(() => {
+    getServicesList()
+      .then((response) => {
+        setServiceList(
+          Object.keys(response).map((key) => {
+            return { ...response[key], id: key };
+          })
+        );
+      })
+      .catch(() => setServiceList([]));
+  });
 
   return (
     <React.Fragment>
@@ -60,7 +73,7 @@ export default function Services({ navigation, route }) {
             ADICIONAR NOVO
           </Button>
         </View>
-        <View style={styles.list}>
+        <View style={styles.list} key={Math.random()}>
           <Text style={{ ...main.title, marginBottom: 10 }}>
             LISTA DE SERVIÇOS
           </Text>
@@ -88,24 +101,10 @@ export default function Services({ navigation, route }) {
         </View>
       </View>
       <Snackbar
-        visible={showSnackBar}
-        duration={2000}
-        style={styles.snackBar}
-        onDismiss={() => setShowSnackBar(false)}
-        wrapperStyle={styles.snackBarWrapper}
-        theme={{ colors: { surface: "#FFFFFF" } }}
-      >
-        Você adicionou o serviço:
-        <Text
-          style={{
-            fontWeight: "700",
-            display: "flex",
-            textTransform: "capitalize",
-          }}
-        >
-          {serviceName}
-        </Text>
-      </Snackbar>
+        visible={snackBar}
+        setVisible={setSnackbar}
+        children={snackbarMessage}
+      />
     </React.Fragment>
   );
 }
@@ -134,15 +133,18 @@ const ServiceList = ({ navigation, serviceList }) => {
                   size={35}
                   icon="square-edit-outline"
                   color={colors.primary}
-                  onPress={() =>
-                    navigation.navigate("ServiceAdd", { serviceData: item })
-                  }
+                  onPress={() => {
+                    navigation.navigate("ServiceAdd", {
+                      serviceData: item,
+                      serviceId: item.id,
+                    });
+                  }}
                 />
               )}
               left={(props) => (
                 <Avatar.Image
                   {...props}
-                  color={"transparent"}
+                  theme={{ colors: { primary: colors.primary } }}
                   source={{ uri: item.img }}
                 />
               )}

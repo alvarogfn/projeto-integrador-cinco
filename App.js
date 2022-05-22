@@ -10,6 +10,7 @@ import CustomDrawer from "./components/CustomDrawer";
 import theme from "./utils/theme";
 import ServiceInfo from "./page/ServiceInfo";
 import ServiceAdd from "./page/ServiceAdd";
+import { UserStorage } from "./Context";
 
 const Drawer = createDrawerNavigator();
 
@@ -21,21 +22,25 @@ export default function App() {
   if (!fontsLoaded) return null;
   else
     return (
-      <PaperProvider>
-        <NavigationContainer>
-          <Drawer.Navigator
-            screenOptions={{ headerShown: false }}
-            drawerContent={(props) => <CustomDrawer {...props} theme={theme} />}
-            initialRouteName="Services"
-          >
-            <Drawer.Screen name="Home" component={Home} />
-            <Drawer.Screen name="Services" component={Services} />
-            <Drawer.Screen name="Promotional" component={Promotional} />
-            <Drawer.Screen name="Analytics" component={Analytics} />
-            <Drawer.Screen name="ServiceInfo" component={ServiceInfo} />
-            <Drawer.Screen name="ServiceAdd" component={ServiceAdd} />
-          </Drawer.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
+      <UserStorage>
+        <PaperProvider>
+          <NavigationContainer>
+            <Drawer.Navigator
+              screenOptions={{ headerShown: false }}
+              drawerContent={(props) => (
+                <CustomDrawer {...props} theme={theme} />
+              )}
+              initialRouteName="Services"
+            >
+              <Drawer.Screen name="Home" component={Home} />
+              <Drawer.Screen name="Services" component={Services} />
+              <Drawer.Screen name="Promotional" component={Promotional} />
+              <Drawer.Screen name="Analytics" component={Analytics} />
+              <Drawer.Screen name="ServiceInfo" component={ServiceInfo} />
+              <Drawer.Screen name="ServiceAdd" component={ServiceAdd} />
+            </Drawer.Navigator>
+          </NavigationContainer>
+        </PaperProvider>
+      </UserStorage>
     );
 }
