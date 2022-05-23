@@ -51,3 +51,35 @@ npm start
 </div>
 
 </div>
+
+<br />
+<br />
+
+### Funcionalidades adicionadas até o dia 22/05/2022
+
+<br />
+
+<div style="display: flex; gap: 15px;">
+
+<div>
+
+**Adicionar serviço e snackbar de adição:**
+<img src="https://imgur.com/7O3sBrd.png" width="250px">
+
+</div>
+
+<div>
+
+**Deletar serviço e snackbar de deleção:**
+<img src="https://imgur.com/5cLtkgs.png" width="250px">
+
+</div>
+
+<div>
+
+**Dialog para confirmar deleção do serviço:**
+<img src="https://imgur.com/ePx57ug.png" width="250px">
+
+</div>
+
+</div>
