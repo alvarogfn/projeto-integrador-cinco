@@ -4,13 +4,14 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { useFonts, Roboto_500Medium } from "@expo-google-fonts/roboto";
 import Home from "./page/Home";
 import Services from "./page/Services";
-import Promotional from "./page/Promotional";
+import Courses from "./page/Courses";
 import Analytics from "./page/Analytics";
 import CustomDrawer from "./components/CustomDrawer";
 import theme from "./utils/theme";
 import ServiceInfo from "./page/ServiceInfo";
-import ServiceAdd from "./page/ServiceAdd";
+import ServiceEditor from "./page/ServiceEditor";
 import { UserStorage } from "./Context";
+import CourseEditor from "./page/CourseEditor";
 
 const Drawer = createDrawerNavigator();
 
@@ -31,14 +32,15 @@ export default function App() {
               drawerContent={(props) => (
                 <CustomDrawer {...props} theme={theme} />
               )}
-              initialRouteName="Services"
+              initialRouteName="Home"
             >
               <Drawer.Screen name="Home" component={Home} />
               <Drawer.Screen name="Services" component={Services} />
-              <Drawer.Screen name="Promotional" component={Promotional} />
+              <Drawer.Screen name="Courses" component={Courses} />
+              <Drawer.Screen name="CourseEditor" component={CourseEditor} />
               <Drawer.Screen name="Analytics" component={Analytics} />
               <Drawer.Screen name="ServiceInfo" component={ServiceInfo} />
-              <Drawer.Screen name="ServiceAdd" component={ServiceAdd} />
+              <Drawer.Screen name="ServiceEditor" component={ServiceEditor} />
             </Drawer.Navigator>
           </NavigationContainer>
         </PaperProvider>

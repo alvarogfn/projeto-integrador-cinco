@@ -45,10 +45,10 @@ export default function CustomDrawer({ theme, navigation }, ...props) {
           />
           <PaperDrawer.Item
             label="Promocional"
-            onPress={() => navigation.jumpTo("promotional")}
+            onPress={() => navigation.jumpTo("Courses")}
             icon={"sale"}
             theme={theme}
-            style={activeRouteStyle("promotional")}
+            style={activeRouteStyle("Courses")}
           />
         </PaperDrawer.Section>
       </View>
