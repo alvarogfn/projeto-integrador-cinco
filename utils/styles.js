@@ -7,7 +7,7 @@ const colors = {
   textWhite: "#FFFFFF",
 };
 
-export default StyleSheet.create({
+const helper = StyleSheet.create({
   appBarBackground: {
     backgroundColor: colors.primary,
   },
@@ -68,4 +68,4 @@ export default StyleSheet.create({
   },
 });
 
-export { colors };
+export { colors, helper };

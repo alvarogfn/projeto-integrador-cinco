@@ -3,13 +3,14 @@ import React from "react";
 import { Button as PaperButton, Colors } from "react-native-paper";
 import { colors } from "../utils/styles";
 
-export default function Button({ onPress, children, padding = 5 }) {
+export default function Button({ onPress, children, padding = 5, icon }) {
   return (
     <PaperButton
       style={styles.container}
       mode="contained"
+      icon={icon}
       onPress={onPress}
-      labelStyle={{ padding: padding, ...styles.text }}
+      labelStyle={{ ...styles.label }}
       theme={{
         colors: {
           text: Colors.white,
@@ -23,7 +24,11 @@ export default function Button({ onPress, children, padding = 5 }) {
 }
 
 const styles = StyleSheet.create({
-  text: {
+  label: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "nowrap",
+    justifyContent: "space-between",
     fontSize: 17,
     fontWeight: "bold",
     color: Colors.white,

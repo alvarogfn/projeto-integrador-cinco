@@ -32,7 +32,7 @@ export default function App() {
               drawerContent={(props) => (
                 <CustomDrawer {...props} theme={theme} />
               )}
-              initialRouteName="Home"
+              initialRouteName="Courses"
             >
               <Drawer.Screen name="Home" component={Home} />
               <Drawer.Screen name="Services" component={Services} />

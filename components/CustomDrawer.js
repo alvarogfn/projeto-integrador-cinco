@@ -44,7 +44,7 @@ export default function CustomDrawer({ theme, navigation }, ...props) {
             style={activeRouteStyle("Analytics")}
           />
           <PaperDrawer.Item
-            label="Promocional"
+            label="Cursos"
             onPress={() => navigation.jumpTo("Courses")}
             icon={"sale"}
             theme={theme}

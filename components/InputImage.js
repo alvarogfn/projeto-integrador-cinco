@@ -7,7 +7,7 @@ import TitleLabel from "./TitleLabel";
 export default function InputImage({ onPress, ...props }) {
   return (
     <View style={styles.container}>
-      <TitleLabel title={"Imagem"} />
+      <TitleLabel title={"Imagem (disabled)"} />
       <Button
         onPress={onPress}
         {...props}
