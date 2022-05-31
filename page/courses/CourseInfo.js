@@ -1,16 +1,22 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import { UserContext } from '../../Context';
 import AppBarEditor from '../../components/AppBarEditor';
 import { Card, Colors, Paragraph, Title } from 'react-native-paper';
-import TitleLabel from '../../components/TitleLabel';
 import { colors } from '../../utils/styles';
+import useBackHandler from '../../hooks/useBackHandler';
 
 export default function CourseInfo() {
   const navigation = useNavigation();
   const route = useRoute();
   const [data, setData] = React.useState({});
+
+  useBackHandler();
 
   const { course } = React.useContext(UserContext);
 
@@ -38,7 +44,7 @@ export default function CourseInfo() {
       <Card style={styles.card}>
         <Card.Cover
           source={{
-            uri: 'https://img.freepik.com/fotos-gratis/3d-rendem-de-uma-mesa-de-madeira-com-uma-imagem-defocussed-de-um-barco-em-um-lago_1048-3432.jpg?w=2000',
+            uri: data.img,
           }}
         />
         <Card.Content>

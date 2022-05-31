@@ -14,7 +14,7 @@ export default function CourseListCard({ data }) {
         navigation.push('CourseInfo', { courseId: data.id });
       }}
     >
-      <Card.Cover source={{ uri: data.image }} />
+      <Card.Cover source={{ uri: data.img }} />
       <Card.Content>
         <Card.Title
           title={data.title}

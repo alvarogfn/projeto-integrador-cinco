@@ -6,6 +6,7 @@ import InputImage from '../../components/InputImage';
 import Button from '../../components/Button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { UserContext } from '../../Context';
+import { faker } from '@faker-js/faker';
 
 export default function CourseEditor({ navigation, route }) {
   const [form, setForm] = React.useState({});
@@ -58,7 +59,10 @@ export default function CourseEditor({ navigation, route }) {
       if (form.id) {
         courseId = await course.put(form, form.id);
       } else {
-        courseId = await course.post(form);
+        courseId = await course.post({
+          ...form,
+          img: faker.image.business(undefined, undefined, true),
+        });
       }
       navigation.push('CourseInfo', { courseId: courseId });
     } catch (e) {
@@ -66,11 +70,39 @@ export default function CourseEditor({ navigation, route }) {
     }
   }
 
+  async function handleDelete() {
+    try {
+      Alert.alert(`Deletar ${form.title}?`, 'Essa ação é irreversível!!!', [
+        { text: 'Não', onPress: () => {}, style: 'cancel' },
+        {
+          text: 'Sim',
+          onPress: async () => {
+            await course.delete(form.id);
+            navigation.popToTop();
+          },
+          style: 'destructive',
+        },
+      ]);
+    } catch (e) {
+      Alert.alert('Um erro aconteceu', e.toString());
+    }
+  }
+
   return (
     <KeyboardAwareScrollView style={styles.container}>
-      <AppBarEditor
-        title={form.id ? `Editando Curso` : 'Adicionar Novo Curso'}
-      />
+      {form.id ? (
+        <AppBarEditor
+          title={'Editando Curso'}
+          handleIcon={handleDelete}
+          icon={'delete'}
+        />
+      ) : (
+        <AppBarEditor
+          title={'Adicionar Novo Curso'}
+          handleIcon={checkForm}
+          icon={'content-save'}
+        />
+      )}
       <View style={styles.form}>
         <Input
           title={'Título'}

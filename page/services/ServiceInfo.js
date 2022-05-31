@@ -5,11 +5,13 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { UserContext } from '../../Context';
 import { Avatar, Card, Divider, Paragraph, Title } from 'react-native-paper';
 import TitleLabel from '../../components/TitleLabel';
+import useBackHandler from '../../hooks/useBackHandler';
 
 export default function ServiceInfo() {
   const navigation = useNavigation();
   const route = useRoute();
   const [data, setData] = React.useState({});
+  useBackHandler();
 
   const { service } = React.useContext(UserContext);
 
@@ -22,6 +24,7 @@ export default function ServiceInfo() {
     <View>
       <AppBarEditor
         icon={'pencil-box'}
+        title={data.name}
         popStackAmount={2}
         handleIcon={() =>
           navigation.push('ServiceEditor', {
@@ -35,7 +38,7 @@ export default function ServiceInfo() {
             <Title>{data.name}</Title>
             <Avatar.Image
               source={{
-                uri: 'https://img.freepik.com/fotos-gratis/3d-rendem-de-uma-mesa-de-madeira-com-uma-imagem-defocussed-de-um-barco-em-um-lago_1048-3432.jpg?w=2000',
+                uri: data.img,
               }}
             />
           </View>

@@ -9,6 +9,7 @@ import Button from '../../components/Button';
 import { UserContext } from '../../Context';
 import ActivityIndicator from '../../components/ActivityIndicator';
 import { HelperText } from 'react-native-paper';
+import { faker } from '@faker-js/faker';
 
 export default function ServiceEditor({ navigation, route }) {
   const [form, setForm] = React.useState({});
@@ -63,7 +64,10 @@ export default function ServiceEditor({ navigation, route }) {
       if (form.id) {
         serviceId = await service.put(form, form.id);
       } else {
-        serviceId = await service.post(form);
+        serviceId = await service.post({
+          ...form,
+          img: faker.image.fashion(undefined, undefined, false),
+        });
       }
 
       navigation.push('ServiceInfo', { serviceId });

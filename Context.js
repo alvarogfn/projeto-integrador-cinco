@@ -107,6 +107,10 @@ export const UserStorage = ({ children }) => {
 
       return json.name;
     },
+    delete: async (id) => {
+      const url = `https://projeto-integrador-5-default-rtdb.firebaseio.com/courses/${id}.json`;
+      fetch(url, { method: 'DELETE' });
+    },
   };
 
   const storage = {
