@@ -1,17 +1,21 @@
-import { StyleSheet } from "react-native";
-import React from "react";
-import { Appbar } from "react-native-paper";
-import { colors } from "../utils/styles";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { StyleSheet } from 'react-native';
+import React from 'react';
+import { Appbar } from 'react-native-paper';
+import { colors } from '../utils/styles';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-export default function AppBarEditor({ title, icon, handleIcon }) {
-  const route = useRoute();
+export default function AppBarEditor({
+  title,
+  icon,
+  handleIcon,
+  popStackAmount = 1,
+}) {
   const navigation = useNavigation();
   return (
     <Appbar.Header style={styles.container}>
       <Appbar.BackAction
         color="#FFFFFF"
-        onPress={() => navigation.navigate(route.params.from)}
+        onPress={() => navigation.pop(popStackAmount)}
       />
       <Appbar.Content titleStyle={styles.text} title={title} />
       <Appbar.Action
@@ -30,8 +34,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colors.textWhite,
-    fontWeight: "500",
+    fontWeight: '500',
     fontSize: 20,
-    textTransform: "capitalize",
+    textTransform: 'capitalize',
   },
 });

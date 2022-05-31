@@ -1,13 +1,19 @@
-import { StyleSheet } from "react-native";
-import React from "react";
-import { Card } from "react-native-paper";
-import Button from "./Button";
-import { useNavigation } from "@react-navigation/native";
+import { StyleSheet } from 'react-native';
+import React from 'react';
+import { Card } from 'react-native-paper';
+import Button from './Button';
+import { useNavigation } from '@react-navigation/native';
 
 export default function CourseListCard({ data }) {
-  const navigate = useNavigation();
+  const navigation = useNavigation();
   return (
-    <Card elevation={2} style={styles.container}>
+    <Card
+      elevation={2}
+      style={styles.container}
+      onPress={() => {
+        navigation.push('CourseInfo', { courseId: data.id });
+      }}
+    >
       <Card.Cover source={{ uri: data.image }} />
       <Card.Content>
         <Card.Title
@@ -17,18 +23,8 @@ export default function CourseListCard({ data }) {
       </Card.Content>
       <Card.Actions style={styles.actions}>
         <Button
-          icon={"archive-edit"}
-          onPress={() => {
-            navigate.reset({
-              index: 0,
-              routes: [
-                {
-                  name: "CourseEditor",
-                  params: { from: "Courses", courseId: data.id },
-                },
-              ],
-            });
-          }}
+          icon={'archive-edit'}
+          onPress={() => navigation.push('CourseEditor', { courseId: data.id })}
         >
           Editar
         </Button>
@@ -42,10 +38,10 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   actions: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "nowrap",
-    justifyContent: "flex-end",
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'flex-end',
     padding: 15,
   },
 });

@@ -1,13 +1,14 @@
-import { View, StyleSheet, Alert } from "react-native";
-import React from "react";
-import Input from "../components/Input";
-import { Masks, formatWithMask } from "react-native-mask-input";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import AppBarEditor from "../components/AppBarEditor";
-import InputImage from "../components/InputImage";
-import Button from "../components/Button";
-import { UserContext } from "../Context";
-import ActivityIndicator from "../components/ActivityIndicator";
+import { View, StyleSheet, Alert } from 'react-native';
+import React from 'react';
+import { Masks, formatWithMask } from 'react-native-mask-input';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Input from '../../components/Input';
+import AppBarEditor from '../../components/AppBarEditor';
+import InputImage from '../../components/InputImage';
+import Button from '../../components/Button';
+import { UserContext } from '../../Context';
+import ActivityIndicator from '../../components/ActivityIndicator';
+import { HelperText } from 'react-native-paper';
 
 export default function ServiceEditor({ navigation, route }) {
   const [form, setForm] = React.useState({});
@@ -16,18 +17,19 @@ export default function ServiceEditor({ navigation, route }) {
 
   React.useEffect(() => {
     try {
-      if (typeof route?.params?.serviceId === "string") {
+      if (typeof route?.params?.serviceId === 'string') {
         setLoading(true);
         service
           .get(route.params.serviceId)
           .then(
             (res) => setForm(res),
-            (err) => Alert.alert("Um erro aconteceu", err.toString())
+            (err) => Alert.alert('Um erro aconteceu', err.toString())
           )
           .then(() => setLoading(false));
 
         return;
       }
+      setLoading(false);
       setForm({});
     } catch (e) {}
   }, [route, setForm]);
@@ -48,50 +50,43 @@ export default function ServiceEditor({ navigation, route }) {
     try {
       const { name, price, description, phone } = form;
       if (!name || !price || !description || !phone) {
-        if (!name) onChangeForm({ name: "" });
-        if (!price) onChangeForm({ price: "" });
-        if (!description) onChangeForm({ description: "" });
-        if (!phone) onChangeForm({ phone: "" });
+        if (!name) onChangeForm({ name: '' });
+        if (!price) onChangeForm({ price: '' });
+        if (!description) onChangeForm({ description: '' });
+        if (!phone) onChangeForm({ phone: '' });
 
-        Alert.alert("Campos faltando", "Preencha os campos obrigatórios");
+        Alert.alert('Campos faltando', 'Preencha os campos obrigatórios');
         return;
       }
 
-      if (form.id) await service.put(form, form.id);
-      else await service.post(form);
+      let serviceId;
+      if (form.id) {
+        serviceId = await service.put(form, form.id);
+      } else {
+        serviceId = await service.post(form);
+      }
 
-      navigation.navigate("Services", {
-        snackbar: {
-          title: form.name,
-          description: form.id
-            ? "Você editou com sucesso!"
-            : "Você adicionou um novo serviço com sucesso!",
-        },
-      });
+      navigation.push('ServiceInfo', { serviceId });
     } catch (e) {
-      Alert.alert("Error", e.toString());
+      Alert.alert('Error', e.toString());
     }
   }
 
   async function handleDelete() {
     try {
-      Alert.alert(`Deletar ${form.name}?`, "Essa ação é irreversível!!!", [
-        { text: "Não", onPress: () => {}, style: "cancel" },
+      Alert.alert(`Deletar ${form.name}?`, 'Essa ação é irreversível!!!', [
+        { text: 'Não', onPress: () => {}, style: 'cancel' },
         {
-          text: "Sim",
+          text: 'Sim',
           onPress: async () => {
             await service.delete(form.id);
-            navigation.navigate("Services", {
-              snackbar: {
-                title: `${form.name} foi deletado com sucesso!`,
-              },
-            });
+            navigation.popToTop();
           },
-          style: "destructive",
+          style: 'destructive',
         },
       ]);
     } catch (e) {
-      Alert.alert("Um erro aconteceu", e.toString());
+      Alert.alert('Um erro aconteceu', e.toString());
     }
   }
 
@@ -100,17 +95,17 @@ export default function ServiceEditor({ navigation, route }) {
       {form.id ? (
         <AppBarEditor
           navigation={navigation}
-          title={"Editando Produto"}
+          title={'Editando Produto'}
           id={form.id}
-          icon={"delete"}
+          icon={'delete'}
           handleIcon={handleDelete}
         />
       ) : (
         <AppBarEditor
           navigation={navigation}
-          title={"Novo serviço"}
+          title={'Novo serviço'}
           id={form.id}
-          icon={"content-save"}
+          icon={'content-save'}
           handleIcon={handleSubmit}
         />
       )}
@@ -119,16 +114,16 @@ export default function ServiceEditor({ navigation, route }) {
       ) : (
         <KeyboardAwareScrollView style={styles.container}>
           <Input
-            title={"Nome"}
+            title={'Nome'}
             value={form.name}
-            isError={form.name === ""}
+            isError={form.name === ''}
             errorMessage="Campo obrigatório"
             onChangeText={(text) => onChangeForm({ name: text })}
           />
           <Input
             title="Descrição"
             value={form.description}
-            isError={form.description === ""}
+            isError={form.description === ''}
             errorMessage="Campo obrigatório"
             onChangeText={(text) => onChangeForm({ description: text })}
             multiline={true}
@@ -138,26 +133,29 @@ export default function ServiceEditor({ navigation, route }) {
             title="Preço"
             placeholder="R$ 0,00"
             value={form.price}
-            isError={form.price === ""}
+            isError={form.price === ''}
             errorMessage="Campo obrigatório"
             onChangeText={(text) => onChangeForm({ price: text })}
             mask={Masks.BRL_CURRENCY}
-            icon={"currency-brl"}
+            icon={'currency-brl'}
           />
           <InputImage title="Imagem" />
           <Input
             title="Número"
             placeholder="(00) 00000-0000"
-            isError={form.phone === ""}
+            isError={form.phone === ''}
             errorMessage="Campo obrigatório"
             value={form.phone}
             onChangeText={(text) => onChangeForm({ phone: text })}
             mask={Masks.BRL_PHONE}
-            icon={"phone"}
+            icon={'phone'}
           />
+          <HelperText type="info" style={{ marginTop: -20, marginLeft: -10 }}>
+            Os seus clientes serão encaminhados para esse número no whatsapp.
+          </HelperText>
           <View style={styles.button}>
             <Button onPress={handleSubmit}>
-              {form.id ? "Editar" : "Salvar"}
+              {form.id ? 'Editar' : 'Salvar'}
             </Button>
           </View>
         </KeyboardAwareScrollView>
@@ -170,7 +168,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 10,
     paddingHorizontal: 20,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
   },
   button: {
     margin: 30,

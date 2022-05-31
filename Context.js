@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const UserContext = React.createContext();
 
@@ -6,10 +6,10 @@ export const UserStorage = ({ children }) => {
   const service = {
     getAll: async () => {
       const response = await fetch(
-        "https://projeto-integrador-5-default-rtdb.firebaseio.com/services.json"
+        'https://projeto-integrador-5-default-rtdb.firebaseio.com/services.json'
       );
       const json = await response.json();
-      if (json === null || response.status !== 200) throw new Error("");
+      if (json === null || response.status !== 200) throw new Error('');
       return Object.keys(json).map((key) => {
         return { ...json[key], id: key };
       });
@@ -18,46 +18,54 @@ export const UserStorage = ({ children }) => {
       const url = `https://projeto-integrador-5-default-rtdb.firebaseio.com/services/${id}.json`;
       const response = await fetch(url);
       const json = await response.json();
-      if (json === null || response.status !== 200) throw new Error("");
 
+      if (json === null || response.status !== 200)
+        throw new Error(response.body);
       return { ...json, id };
     },
     put: async (form, id) => {
       const url = `https://projeto-integrador-5-default-rtdb.firebaseio.com/services/${id}.json`;
       const response = await fetch(url, {
-        method: "PUT",
+        method: 'PUT',
         body: JSON.stringify(form),
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
       if (response.status !== 200) throw new Error(response.status);
+
+      return id;
     },
     post: async (form) => {
       const url = `https://projeto-integrador-5-default-rtdb.firebaseio.com/services.json`;
       const response = await fetch(url, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify(form),
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
+
       if (response.status !== 200) throw new Error(response.status);
+
+      const json = await response.json();
+
+      return json.name;
     },
     delete: async (id) => {
       const url = `https://projeto-integrador-5-default-rtdb.firebaseio.com/services/${id}.json`;
-      fetch(url, { method: "DELETE" });
+      fetch(url, { method: 'DELETE' });
     },
   };
 
   const course = {
     getAll: async () => {
       const response = await fetch(
-        "https://projeto-integrador-5-default-rtdb.firebaseio.com/courses.json"
+        'https://projeto-integrador-5-default-rtdb.firebaseio.com/courses.json'
       );
       const json = await response.json();
-      if (json === null || response.status !== 200) throw new Error("");
+      if (json === null || response.status !== 200) throw new Error('');
       return Object.keys(json).map((key) => {
         return { ...json[key], id: key };
       });
@@ -66,31 +74,38 @@ export const UserStorage = ({ children }) => {
       const url = `https://projeto-integrador-5-default-rtdb.firebaseio.com/courses/${id}.json`;
       const response = await fetch(url);
       const json = await response.json();
-      if (json === null || response.status !== 200) throw new Error("");
+      if (json === null || response.status !== 200)
+        throw new Error(response.body);
       return { ...json, id };
     },
     put: async (form, id) => {
       const url = `https://projeto-integrador-5-default-rtdb.firebaseio.com/courses/${id}.json`;
       const response = await fetch(url, {
-        method: "PUT",
+        method: 'PUT',
         body: JSON.stringify(form),
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
       if (response.status !== 200) throw new Error(response.status);
+
+      return id;
     },
     post: async (form) => {
       const url = `https://projeto-integrador-5-default-rtdb.firebaseio.com/courses.json`;
       const response = await fetch(url, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify(form),
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
       if (response.status !== 200) throw new Error(response.status);
+
+      const json = await response.json();
+
+      return json.name;
     },
   };
 
