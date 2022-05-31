@@ -16,70 +16,64 @@ npm install
 npm start
 ```
 
-<br>
-<br>
-
-## Progressão do Projeto
-
-<br>
-
 ### Funcionalidades adicionadas até o dia 16/05/2022
+
+**Drawer para navegação entre telas**
+
+<img  src="https://i.imgur.com/Wb0bs2a.png"  width="250px">
+
+**Tela com listagem de produtos:**
+
+<img  src="https://imgur.com/AN3NL0I.png"  width="250px">
+  
+**Tela para adicionar produtos:**
+
+<img  src="https://imgur.com/7wRKxB2.png"  width="250px">
 
 <br/>
 
-<div style="display: flex; gap: 15px;">
-
-<div>
-
-**Drawer para navegação entre telas:**
-<img src="https://i.imgur.com/Wb0bs2a.png" width="250px">
-
-</div>
-
-<div>
-
-**Tela com listagem de produtos:**
-<img src="https://imgur.com/AN3NL0I.png" width="250px">
-
-</div>
-
-<div>
-
-**Tela para adicionar produtos:**
-<img src="https://imgur.com/7wRKxB2.png" width="250px">
-
-</div>
-
-</div>
-
-<br />
-<br />
-
 ### Funcionalidades adicionadas até o dia 22/05/2022
 
-<br />
-
-<div style="display: flex; gap: 15px;">
-
-<div>
-
 **Adicionar serviço e snackbar de adição:**
-<img src="https://imgur.com/7O3sBrd.png" width="250px">
 
-</div>
-
-<div>
+<img  src="https://imgur.com/7O3sBrd.png"  width="250px">
 
 **Deletar serviço e snackbar de deleção:**
-<img src="https://imgur.com/5cLtkgs.png" width="250px">
 
-</div>
-
-<div>
+<img  src="https://imgur.com/5cLtkgs.png"  width="250px">
 
 **Dialog para confirmar deleção do serviço:**
-<img src="https://imgur.com/ePx57ug.png" width="250px">
 
-</div>
+<img  src="https://imgur.com/ePx57ug.png"  width="250px">
 
-</div>
+<br/>
+
+### Funcionalidades adicionadas até o dia 31/05/2022
+
+**Re-Design listagem de serviços**
+
+<img  src="https://imgur.com/uZCV3fH.png" width="250px">
+
+**Re-Design formulário de serviços**
+
+<img  src="https://imgur.com/IzxBGLE.png" width="250px">
+
+**Tela de informações sobre o serviço**
+
+<img  src="https://imgur.com/Twy4KMU.png" width="250px">
+
+**Tela de cursos**
+
+<img  src="https://imgur.com/19nA6jh.png" width="250px">
+
+**Formulário de cursos**
+
+<img  src="https://imgur.com/5GZG9KB.png" width="250px">
+
+**Formulário de cursos vazio**
+
+<img  src="https://imgur.com/ak4ZuEi.png" width="250px">
+
+**Tela de descrição de curso**
+
+<img  src="https://imgur.com/5KKs1mU.png" width="250px">
