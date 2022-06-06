@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import React from 'react';
 import AppBarEditor from '../../components/AppBarEditor';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { UserContext } from '../../Context';
 import {
   Avatar,
@@ -13,19 +13,28 @@ import {
 } from 'react-native-paper';
 import TitleLabel from '../../components/TitleLabel';
 import useBackHandler from '../../hooks/useBackHandler';
+import { stackNavigation } from '../../utils/types.navigation';
+import { serviceType } from '../../utils/types';
 
 export default function ServiceInfo() {
-  const navigation = useNavigation();
-  const route = useRoute();
-  const [data, setData] = React.useState({});
+  const navigation = useNavigation<stackNavigation>();
+
+  const route: RouteProp<
+    { params: { serviceId: string | undefined } },
+    'params'
+  > = useRoute();
+
+  const [data, setData] = React.useState<serviceType | null>(null);
+  const { service } = React.useContext(UserContext)!;
   useBackHandler();
-  const { service } = React.useContext(UserContext);
 
   React.useEffect(() => {
     if (route?.params?.serviceId)
       service.get(route?.params?.serviceId).then((r) => setData(r));
+    else navigation.popToTop();
   }, [route, service, setData]);
 
+  if (!data) return null;
   return (
     <View>
       <AppBarEditor
@@ -44,7 +53,7 @@ export default function ServiceInfo() {
             <Title>{data.name}</Title>
             <Avatar.Image
               source={{
-                uri: data.img,
+                uri: data.img as string,
               }}
               theme={{ colors: { primary: Colors.transparent } }}
             />

@@ -11,7 +11,8 @@ type courseType = {
   title: string;
   description: string;
   redirect: string;
-  img: string;
+  img: string | imageDataType;
+  id?: string;
 };
 
 type imageDataType = {

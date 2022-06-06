@@ -86,22 +86,49 @@ export const UserStorage = ({ children }: { children: React.ReactNode }) => {
       return { ...data.val(), id: data.key };
     },
     put: async (form: courseType, id: string): Promise<string | null> => {
+      if (typeof form.img !== 'string') {
+        const img = form.img;
+        const url = await storage.put(
+          img.file,
+          `/courses/${id}.${img.ext}`,
+          `image/${img.ext}`
+        );
+        form.img = url ? url : await utils.getDefaultImage();
+      }
       const key = await realtime.put('/courses/' + id, form);
       return key;
     },
     post: async (form: courseType): Promise<string | null> => {
-      const key = await realtime.post('/courses/', form);
+      const id = await realtime.post('/courses/');
 
-      return key;
+      if (typeof form.img !== 'string') {
+        const img = form.img;
+        const url = await storage.put(
+          img.file,
+          `/courses/${id}.${img.ext}`,
+          `image/${img.ext}`
+        );
+        form.img = url ? url : await utils.getDefaultImage();
+      }
+
+      await realtime.put('/courses/' + id, form);
+
+      return id;
     },
-    delete: (id: string) => {
-      return realtime.delete('/courses/' + id);
+    delete: async (id: string) => {
+      try {
+        await realtime.delete('/courses/' + id);
+        await storage.delete('/courses/', id);
+        return true;
+      } catch (e) {
+        return false;
+      }
     },
   };
 
   const utils = {
     getDefaultImage: () => {
-      return storage.get('/services/empty.png');
+      return storage.get('/empty.png');
     },
   };
 

@@ -19,7 +19,7 @@ type coursesContext = {
   get: (id: string) => Promise<courseType | null>;
   put: (form: courseType, id: string) => Promise<string | null>;
   post: (form: courseType) => Promise<string | null>;
-  delete: (id: string) => Promise<void>;
+  delete: (id: string) => Promise<boolean>;
 };
 
 type storageContext = {

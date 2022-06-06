@@ -6,96 +6,112 @@ import InputImage from '../../components/InputImage';
 import Button from '../../components/Button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { UserContext } from '../../Context';
-import { faker } from '@faker-js/faker';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { stackNavigation } from '../../utils/types.navigation';
+import { courseType, imageDataType } from '../../utils/types';
+import ActivityIndicator from '../../components/ActivityIndicator';
 
 export default function CourseEditor() {
   const navigation = useNavigation<stackNavigation>();
-  const route = useRoute();
+  const { utils } = React.useContext(UserContext)!;
 
-  const [form, setForm] = React.useState({});
+  const route: RouteProp<
+    { params: { courseId: string | undefined } },
+    'params'
+  > = useRoute();
+
+  const [id, setId] = React.useState<string | undefined>(() => {
+    if (typeof route.params?.courseId === 'string')
+      return route.params.courseId;
+    return undefined;
+  });
+
+  const [title, setTitle] = React.useState<string>('');
+  const [description, setDescription] = React.useState<string>('');
+  const [redirect, setRedirect] = React.useState<string>('');
+  const [imageData, setImageData] = React.useState<imageDataType | null>(null);
+  const [imageURL, setImageURL] = React.useState<string | null>(null);
+
   const { course } = React.useContext(UserContext)!;
 
   React.useEffect(() => {
-    const id: string | undefined = route?.params?.courseId;
-    if (id)
-      course.get(id).then(
-        (r) => setForm((state) => Object.assign({}, r)),
-        (err) => Alert.alert('Um erro aconteceu', err.toString())
-      );
-  }, [route, setForm]);
-
-  function handleForm(object) {
-    setForm((state) => Object.assign({}, state, object));
-  }
-
-  function checkForm() {
-    const { title, description, redirect } = form;
-    if (!title || !description || !redirect) {
-      if (!title) handleForm({ title: '' });
-      if (!description) handleForm({ description: '' });
-      if (!redirect) handleForm({ redirect: '' });
-      Alert.alert('Preencha todos os campos!');
-      return;
+    async function fetchData() {
+      setImageURL(await utils.getDefaultImage());
     }
+    if (!id) fetchData();
+  });
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        if (id) {
+          const response = await course.get(id);
+          if (response === null) throw new Error();
+          setId(response!.id);
+          setTitle(response!.title);
+          setDescription(response!.description);
+          setRedirect(response!.redirect);
+          if (typeof response!.img === 'string') setImageURL(response!.img);
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        console.log('Um erro aconteceu no CourseEditor', e.toString());
+      }
+    }
+    fetchData();
+  }, [route, course]);
 
-    Alert.alert(
-      form.id
-        ? `Editar o curso ${form.title}?`
-        : `Adicionar o curso ${form.title}?`,
-      '',
-      [
-        {
-          text: 'Não',
-          onPress: () => {},
-        },
-        {
-          text: 'Sim',
-          onPress: handleSubmit,
-        },
-      ]
-    );
+  function verifyInputs() {
+    if (title.trim() && redirect.trim() && description.trim()) return true;
+    return false;
   }
 
   async function handleSubmit() {
+    if (!verifyInputs()) {
+      Alert.alert('Preencha os campos obrigatórios!');
+      return;
+    }
+
+    const form: courseType = {
+      title: title,
+      description: description,
+      redirect: redirect,
+      img: imageData ? imageData : imageURL!,
+    };
+
     try {
-      let courseId;
-      if (form.id) {
-        courseId = await course.put(form, form.id);
-      } else {
-        courseId = await course.post({
-          ...form,
-          img: faker.image.business(undefined, undefined, true),
-        });
+      if (!id) {
+        const courseId = await course.post(form);
+        return navigation.push('CourseInfo', { courseId });
       }
-      navigation.push('CourseInfo', { courseId: courseId });
-    } catch (e) {
-      Alert.alert('Um erro aconteceu', err.toString());
+      await course.put(form, id);
+      return navigation.push('CourseInfo', { courseId: id });
+    } catch (err) {
+      console.log('an error ocorred in put/push in handlesubmit', err);
     }
   }
 
   async function handleDelete() {
     try {
-      Alert.alert(`Deletar ${form.title}?`, 'Essa ação é irreversível!!!', [
-        { text: 'Não', onPress: () => {}, style: 'cancel' },
+      Alert.alert(`Deletar ${title}?`, 'Essa ação é irreversível!!!', [
+        { text: 'Não', onPress: () => null, style: 'cancel' },
         {
           text: 'Sim',
           onPress: async () => {
-            await course.delete(form.id);
+            await course.delete(id!);
             navigation.popToTop();
           },
           style: 'destructive',
         },
       ]);
-    } catch (e) {
-      Alert.alert('Um erro aconteceu', e.toString());
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      Alert.alert('Um erro aconteceu', err.toString());
     }
   }
 
   return (
     <KeyboardAwareScrollView style={styles.container}>
-      {form.id ? (
+      {id ? (
         <AppBarEditor
           title={'Editando Curso'}
           handleIcon={handleDelete}
@@ -104,40 +120,39 @@ export default function CourseEditor() {
       ) : (
         <AppBarEditor
           title={'Adicionar Novo Curso'}
-          handleIcon={checkForm}
+          handleIcon={handleSubmit}
           icon={'content-save'}
         />
       )}
       <View style={styles.form}>
         <Input
           title={'Título'}
-          isError={form.title === ''}
           errorMessage={'Esse campo é obrigatório'}
-          value={form.title}
-          onChangeText={(value) => handleForm({ title: value })}
+          value={title}
+          onChangeText={(value) => setTitle(value)}
         />
         <Input
           title={'Descrição'}
-          isError={form.description === ''}
           errorMessage={'Esse campo é obrigatório'}
-          value={form.description}
-          onChangeText={(value) => handleForm({ description: value })}
+          value={description}
+          onChangeText={(value) => setDescription(value)}
           numberOfLines={8}
           multiline={true}
         />
         <Input
           title={'Link de Redirecionamento'}
-          isError={form.redirect === ''}
-          value={form.redirect}
+          value={redirect}
+          onChangeText={(value) => setRedirect(value)}
           errorMessage={'Esse campo é obrigatório'}
-          onChangeText={(value) => handleForm({ redirect: value })}
         ></Input>
-        <InputImage onPress={() => {}} />
+        {imageURL === null ? (
+          <ActivityIndicator />
+        ) : (
+          <InputImage actualImage={imageURL} onChangeImage={setImageData} />
+        )}
       </View>
       <View style={styles.button}>
-        <Button onPress={checkForm} mode={'contained'}>
-          {form.id ? 'Editar' : 'Adicionar'}
-        </Button>
+        <Button onPress={handleSubmit}>{id ? 'Editar' : 'Adicionar'}</Button>
       </View>
     </KeyboardAwareScrollView>
   );
