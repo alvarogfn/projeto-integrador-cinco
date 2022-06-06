@@ -2,15 +2,21 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import { Appbar } from 'react-native-paper';
 import { colors } from '../utils/styles';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { stackNavigation } from '../utils/types.navigation';
 
 export default function AppBarEditor({
   title,
   icon,
   handleIcon,
   popStackAmount = 1,
+}: {
+  title: string;
+  icon?: string;
+  handleIcon?: () => void;
+  popStackAmount?: number;
 }) {
-  const navigation = useNavigation();
+  const navigation = useNavigation<stackNavigation>();
   return (
     <Appbar.Header style={styles.container}>
       <Appbar.BackAction
@@ -18,13 +24,15 @@ export default function AppBarEditor({
         onPress={() => navigation.pop(popStackAmount)}
       />
       <Appbar.Content titleStyle={styles.text} title={title} />
-      <Appbar.Action
-        icon={icon}
-        color="#FFFFFF"
-        onPress={handleIcon}
-        size={32}
-        style={{ marginRight: 10 }}
-      />
+      {icon && handleIcon && (
+        <Appbar.Action
+          icon={icon}
+          color="#FFFFFF"
+          onPress={handleIcon}
+          size={32}
+          style={{ marginRight: 10 }}
+        />
+      )}
     </Appbar.Header>
   );
 }

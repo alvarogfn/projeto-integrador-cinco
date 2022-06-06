@@ -1,10 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import {
-  useFocusEffect,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { UserContext } from '../../Context';
 import AppBarEditor from '../../components/AppBarEditor';
 import { Card, Colors, Paragraph, Title } from 'react-native-paper';
@@ -14,6 +10,7 @@ import useBackHandler from '../../hooks/useBackHandler';
 export default function CourseInfo() {
   const navigation = useNavigation();
   const route = useRoute();
+  useBackHandler();
   const [data, setData] = React.useState({});
 
   useBackHandler();

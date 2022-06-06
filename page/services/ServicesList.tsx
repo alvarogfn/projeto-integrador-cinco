@@ -1,28 +1,33 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import AppBar from '../../components/AppBar';
-import Snackbar from '../../components/Snackbar';
 import { UserContext } from '../../Context';
 import ServiceListItem from '../../components/ServiceListItem';
 import FAB from '../../components/FAB';
 import ActivityIndicator from '../../components/ActivityIndicator';
-import { Colors, Title } from 'react-native-paper';
+import { Title } from 'react-native-paper';
 import { colors } from '../../utils/styles';
+import { context } from '../../utils/types.context';
+import { useNavigation } from '@react-navigation/native';
+import { serviceType } from '../../utils/types';
+import { stackNavigation } from '../../utils/types.navigation';
 
-export default function ServicesList({ navigation }) {
-  const [services, setServices] = React.useState({});
-  const { service } = React.useContext(UserContext);
+export default function ServicesList() {
+  const navigation = useNavigation<stackNavigation>();
+  const [services, setServices] = React.useState<serviceType[]>([]);
+  const { service } = React.useContext<context | null>(UserContext)!;
   const [isLoading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
-    const onFocus = navigation.addListener('focus', async () => {
+    const onFocus = navigation.addListener('focus', async (): Promise<void> => {
       try {
         setLoading(true);
         const response = await service.getAll();
+        if (!response) throw new Error();
         setServices(response);
-        setLoading(false);
       } catch (error) {
-        setServices(null);
+        setServices(() => []);
+      } finally {
         setLoading(false);
       }
     });
@@ -32,7 +37,7 @@ export default function ServicesList({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <AppBar title={'Seus Serviços'} navigation={navigation} />
+      <AppBar title={'Seus Serviços'} />
       {isLoading ? (
         <ActivityIndicator />
       ) : (
@@ -41,10 +46,10 @@ export default function ServicesList({ navigation }) {
             <FlatList
               data={services}
               scrollEnabled={true}
-              keyExtractor={({ id }) => id}
+              keyExtractor={({ id }) => id!}
               style={styles.list}
               renderItem={({ item }) => {
-                return <ServiceListItem item={item} navigation={navigation} />;
+                return <ServiceListItem item={item} />;
               }}
             />
           ) : (

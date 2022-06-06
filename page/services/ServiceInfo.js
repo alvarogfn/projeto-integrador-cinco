@@ -3,7 +3,14 @@ import React from 'react';
 import AppBarEditor from '../../components/AppBarEditor';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { UserContext } from '../../Context';
-import { Avatar, Card, Divider, Paragraph, Title } from 'react-native-paper';
+import {
+  Avatar,
+  Card,
+  Colors,
+  Divider,
+  Paragraph,
+  Title,
+} from 'react-native-paper';
 import TitleLabel from '../../components/TitleLabel';
 import useBackHandler from '../../hooks/useBackHandler';
 
@@ -12,7 +19,6 @@ export default function ServiceInfo() {
   const route = useRoute();
   const [data, setData] = React.useState({});
   useBackHandler();
-
   const { service } = React.useContext(UserContext);
 
   React.useEffect(() => {
@@ -40,6 +46,7 @@ export default function ServiceInfo() {
               source={{
                 uri: data.img,
               }}
+              theme={{ colors: { primary: Colors.transparent } }}
             />
           </View>
           <Divider style={{ marginVertical: 10 }} />

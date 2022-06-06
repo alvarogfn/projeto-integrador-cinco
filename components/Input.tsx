@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 import {
   TextInput as PaperInput,
   Colors,
   HelperText,
-} from "react-native-paper";
-import MaskInput from "react-native-mask-input";
-import { colors } from "../utils/styles";
-import { View } from "react-native";
-import { StyleSheet } from "react-native";
-import TitleLabel from "./TitleLabel";
+} from 'react-native-paper';
+import MaskInput, { Mask } from 'react-native-mask-input';
+import { colors } from '../utils/styles';
+import { View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import TitleLabel from './TitleLabel';
 
 export default function Input({
   title,
   mask,
-  mode,
+  mode = 'outlined',
   icon,
   placeholder,
   value,
@@ -22,13 +22,26 @@ export default function Input({
   onChangeText,
   multiline,
   numberOfLines,
-  ...props
+  hasIcon = false,
+}: {
+  title?: string;
+  mask?: Mask;
+  mode?: 'outlined' | 'flat';
+  icon?: string;
+  placeholder?: string;
+  value: string;
+  isError?: boolean;
+  errorMessage?: string;
+  onChangeText: (text: string) => void;
+  multiline?: boolean;
+  numberOfLines?: number;
+  hasIcon?: boolean;
 }) {
   return (
     <View style={styles.container}>
       <TitleLabel title={title} />
       <PaperInput
-        mode={mode || "outlined"}
+        mode={mode}
         outlineColor={Colors.grey300}
         activeOutlineColor={colors.primary}
         placeholder={placeholder}
@@ -46,14 +59,18 @@ export default function Input({
           },
         }}
         render={
-          mask ? (props) => <MaskInput mask={mask} {...props} /> : undefined
+          mask
+            ? (props) => (
+                <MaskInput value={props.value!} mask={mask} {...props} />
+              )
+            : undefined
         }
         right={
           icon ? (
             <PaperInput.Icon
               name={icon}
               color={colors.primary}
-              disabled={props.disabled}
+              disabled={hasIcon}
             />
           ) : undefined
         }

@@ -7,13 +7,18 @@ import Button from '../../components/Button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { UserContext } from '../../Context';
 import { faker } from '@faker-js/faker';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { stackNavigation } from '../../utils/types.navigation';
 
-export default function CourseEditor({ navigation, route }) {
+export default function CourseEditor() {
+  const navigation = useNavigation<stackNavigation>();
+  const route = useRoute();
+
   const [form, setForm] = React.useState({});
-  const { course } = React.useContext(UserContext);
+  const { course } = React.useContext(UserContext)!;
 
   React.useEffect(() => {
-    const id = route?.params?.courseId;
+    const id: string | undefined = route?.params?.courseId;
     if (id)
       course.get(id).then(
         (r) => setForm((state) => Object.assign({}, r)),
