@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "projeto-integrador-cinco",
-    "slug": "projeto-integrador-cinco",
+    "name": "beauty-dashboard",
+    "slug": "beauty-dashboard",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
     "plugins": [
       [
@@ -19,20 +19,30 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ECBBAC"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Allow Dashboard to access your photos.",
+        "NSPhotoLibraryAddUsageDescription": "Allow dashboard to save photos."
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/dashboard.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_MEDIA_LOCATION"
+      ],
+      "package": "alvarogfn.atenas.dashboard"
     },
     "web": {
       "favicon": "./assets/favicon.png"

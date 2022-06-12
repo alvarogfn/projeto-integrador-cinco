@@ -30,7 +30,7 @@ export default function ServiceListItem({ item }: { item: serviceType }) {
             style={styles.avatar}
             theme={{ colors: { primary: styles.label.color } }}
             source={{
-              uri: item.img,
+              uri: item.img as string,
             }}
           />
         )}

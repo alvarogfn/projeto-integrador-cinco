@@ -113,13 +113,13 @@ export default function CourseEditor() {
     <KeyboardAwareScrollView style={styles.container}>
       {id ? (
         <AppBarEditor
-          title={'Editando Curso'}
+          title={'Editando Anúncio'}
           handleIcon={handleDelete}
           icon={'delete'}
         />
       ) : (
         <AppBarEditor
-          title={'Adicionar Novo Curso'}
+          title={'Adicionar Novo Anúncio'}
           handleIcon={handleSubmit}
           icon={'content-save'}
         />
@@ -148,7 +148,11 @@ export default function CourseEditor() {
         {imageURL === null ? (
           <ActivityIndicator />
         ) : (
-          <InputImage actualImage={imageURL} onChangeImage={setImageData} />
+          <InputImage
+            actualImage={imageURL}
+            onChangeImage={setImageData}
+            aspectRatio={[23, 9]}
+          />
         )}
       </View>
       <View style={styles.button}>

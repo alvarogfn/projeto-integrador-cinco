@@ -10,7 +10,9 @@ import { imageDataType, imageExtension } from '../utils/types';
 export default function InputImage({
   actualImage,
   onChangeImage,
+  aspectRatio = [1, 1],
 }: {
+  aspectRatio?: [number, number];
   actualImage: string;
   onChangeImage: (data: imageDataType) => void;
 }) {
@@ -26,7 +28,7 @@ export default function InputImage({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         allowsMultipleSelection: false,
-        aspect: [1, 1],
+        aspect: aspectRatio,
       });
       if (response.cancelled) throw new Error();
 

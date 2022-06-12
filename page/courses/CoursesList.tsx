@@ -5,11 +5,15 @@ import FAB from '../../components/FAB';
 import { UserContext } from '../../Context';
 import CourseListCard from '../../components/CourseListCard';
 import ActivityIndicator from '../../components/ActivityIndicator';
+import { useNavigation } from '@react-navigation/native';
+import { stackNavigation } from '../../utils/types.navigation';
+import { courseType } from '../../utils/types';
 
-export default function CoursesList({ navigation }) {
-  const [listCurses, setListCourse] = React.useState();
-  const [loading, setLoading] = React.useState();
-  const { course } = React.useContext(UserContext);
+export default function CoursesList() {
+  const navigation = useNavigation<stackNavigation>();
+  const [listCurses, setListCourse] = React.useState<courseType[] | null>();
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const { course } = React.useContext(UserContext)!;
 
   React.useEffect(() => {
     setLoading(true);
@@ -28,7 +32,7 @@ export default function CoursesList({ navigation }) {
 
   return (
     <React.Fragment>
-      <AppBar title={'Cursos'} navigation={navigation} />
+      <AppBar title={'Anúncios'} />
       <FAB icon={'plus'} onPress={() => navigation.push('CourseEditor')} />
       {loading ? (
         <ActivityIndicator />
@@ -36,7 +40,7 @@ export default function CoursesList({ navigation }) {
         <FlatList
           style={styles.container}
           data={listCurses}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id!}
           renderItem={({ item }) => <CourseListCard data={item} />}
         />
       )}

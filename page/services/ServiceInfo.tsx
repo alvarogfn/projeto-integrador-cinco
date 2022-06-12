@@ -3,18 +3,13 @@ import React from 'react';
 import AppBarEditor from '../../components/AppBarEditor';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { UserContext } from '../../Context';
-import {
-  Avatar,
-  Card,
-  Colors,
-  Divider,
-  Paragraph,
-  Title,
-} from 'react-native-paper';
+import { Card, Divider, Paragraph, Title } from 'react-native-paper';
 import TitleLabel from '../../components/TitleLabel';
 import useBackHandler from '../../hooks/useBackHandler';
 import { stackNavigation } from '../../utils/types.navigation';
 import { serviceType } from '../../utils/types';
+import { toPrice } from '../../utils/toPrice';
+import { formatWithMask, Masks } from 'react-native-mask-input';
 
 export default function ServiceInfo() {
   const navigation = useNavigation<stackNavigation>();
@@ -48,23 +43,37 @@ export default function ServiceInfo() {
         }
       />
       <Card style={styles.card}>
+        <Card.Cover
+          style={styles.cardImage}
+          source={{
+            uri: data.img as string,
+          }}
+        ></Card.Cover>
+        <Card.Title
+          titleStyle={styles.cardTitle}
+          title={data.name}
+          titleNumberOfLines={4}
+        />
         <Card.Content>
-          <View style={styles.cardHeader}>
-            <Title>{data.name}</Title>
-            <Avatar.Image
-              source={{
-                uri: data.img as string,
-              }}
-              theme={{ colors: { primary: Colors.transparent } }}
-            />
-          </View>
           <Divider style={{ marginVertical: 10 }} />
           <View>
             <TitleLabel title={'Preço'} />
-            <Paragraph>{data.price}</Paragraph>
+            <Paragraph>{toPrice(parseInt(data.price) / 100)}</Paragraph>
             <TitleLabel title={'Descrição'} />
             <Paragraph>{data.description}</Paragraph>
+            <TitleLabel title={'Whatsapp de Encaminhamento'} />
+            <Paragraph>
+              {
+                formatWithMask({ text: data.phone, mask: Masks.BRL_PHONE })
+                  .masked
+              }
+            </Paragraph>
           </View>
+        </Card.Content>
+      </Card>
+      <Card style={styles.card}>
+        <Card.Content>
+          <Title>oi</Title>
         </Card.Content>
       </Card>
     </View>
@@ -75,11 +84,12 @@ const styles = StyleSheet.create({
   card: {
     margin: 10,
   },
-  cardHeader: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  cardTitle: {
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    paddingVertical: 10,
+  },
+  cardImage: {
+    height: 300,
   },
 });

@@ -21,7 +21,7 @@ export default function App() {
           <Drawer.Navigator
             screenOptions={{ headerShown: false }}
             backBehavior={'history'}
-            drawerContent={(props) => <CustomDrawer {...props} theme={theme} />}
+            drawerContent={(props) => <CustomDrawer {...props} />}
             initialRouteName="Home"
           >
             <Drawer.Screen name="Home" component={Home} />
