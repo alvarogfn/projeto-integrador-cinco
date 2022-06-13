@@ -24,7 +24,7 @@ export default function CustomDrawer({
             icon="home"
             size={50}
             style={styles.homeIcon}
-            onPress={() => navigation.jumpTo('Home')}
+            onPress={() => navigation.jumpTo('Services')} //TODO Hack
             color={Colors.white}
           />
         </View>

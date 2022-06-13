@@ -22,6 +22,22 @@ type imageDataType = {
   uri: string;
 };
 
+type rateType = {
+  description: string;
+  email: string;
+  like: boolean;
+  name: string;
+  time: number;
+  rate_id: string;
+  rate_service_id: string;
+};
+
 type imageExtension = 'png' | 'jpeg' | 'jpg' | 'webp';
 
-export type { serviceType, courseType, imageDataType, imageExtension };
+export type {
+  serviceType,
+  courseType,
+  imageDataType,
+  imageExtension,
+  rateType,
+};

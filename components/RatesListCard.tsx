@@ -1,43 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { Avatar, Colors, Divider, Title } from 'react-native-paper';
-import { UserContext } from '../Context';
 import { rateType } from '../utils/types';
+import { Avatar, Colors, Divider } from 'react-native-paper';
 import { colors } from '../utils/styles';
 
-import IconAmountCard from './IconAmountCard';
-
-export default function ServiceComments({ id }: { id: string }) {
-  const { rates } = React.useContext(UserContext)!;
-
-  const [serviceRates, setServiceRate] = React.useState<rateType[] | null>(
-    null
-  );
-
-  React.useEffect(() => {
-    async function fetchData() {
-      const response = await rates.get(id);
-      if (response) setServiceRate(response.sort((a, b) => b.time - a.time));
-    }
-    if (id) fetchData();
-  }, [setServiceRate, rates, id]);
-
-  if (serviceRates === null) return null;
-
+export default function RatesListCard({ rates }: { rates: rateType[] }) {
+  if (rates.length === 0) return null;
   return (
-    <View>
-      <View style={styles.header}>
-        <Title style={styles.title}>Avaliações</Title>
-        <IconAmountCard
-          icon={'heart'}
-          amount={
-            serviceRates ? serviceRates.filter((item) => item.like).length : 0
-          }
-        ></IconAmountCard>
-      </View>
-
-      {serviceRates.map((item, index) => (
-        <View key={item.rate_id + index}>
+    <>
+      {rates.map((item) => (
+        <View key={item.rate_id}>
           <Divider />
           <View style={styles.card}>
             <Text style={styles.name}>{item.name}</Text>
@@ -66,31 +38,15 @@ export default function ServiceComments({ id }: { id: string }) {
           </View>
         </View>
       ))}
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  title: {
-    color: colors.secondary,
-    fontWeight: 'bold',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    flexGrow: 5,
-  },
-  header: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  headerLikes: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-  },
   card: {
-    padding: 20,
     position: 'relative',
+    padding: 10,
+    paddingBottom: 35,
   },
   email: {
     fontSize: 12,
@@ -100,6 +56,7 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: 'bold',
     fontSize: 15,
+    marginTop: 12,
   },
   description: {
     marginTop: 5,

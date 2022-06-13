@@ -1,9 +1,10 @@
-import { courseType, serviceType } from './types';
+import { courseType, rateType, serviceType } from './types';
 
 type context = {
   service: servicesContext;
   course: coursesContext;
   utils: storageContext;
+  rates: ratesContext;
 };
 
 type servicesContext = {
@@ -24,6 +25,11 @@ type coursesContext = {
 
 type storageContext = {
   getDefaultImage: () => Promise<string>;
+};
+
+type ratesContext = {
+  getAll: () => Promise<Array<rateType> | null>;
+  get: (id: string) => Promise<rateType[] | null>;
 };
 
 export type { context };

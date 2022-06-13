@@ -1,6 +1,6 @@
 import React from 'react';
 import { Realtime, Storage } from './firebase';
-import { courseType, serviceType } from './utils/types';
+import { courseType, rateType, serviceType } from './utils/types';
 import { context } from './utils/types.context';
 
 export const UserContext = React.createContext<context | null>(null);
@@ -126,6 +126,39 @@ export const UserStorage = ({ children }: { children: React.ReactNode }) => {
     },
   };
 
+  const rates = {
+    getAll: async (): Promise<Array<rateType> | null> => {
+      const data = await realtime.get('/rates/');
+
+      const response: Array<rateType> = [];
+
+      data.forEach((item) => {
+        item.forEach((rate) => {
+          response.push({
+            ...rate.val(),
+            rate_id: rate.key,
+            rate_service_id: item.key,
+          });
+        });
+      });
+
+      if (response.length === 0) return null;
+
+      return response;
+    },
+    get: async (id: string): Promise<rateType[] | null> => {
+      const data = await realtime.get('/rates/' + id);
+      if (!data.exists) return null;
+
+      const response: rateType[] = [];
+
+      data.forEach((item) => {
+        response.push({ ...item.val(), id: item.key });
+      });
+      return response;
+    },
+  };
+
   const utils = {
     getDefaultImage: () => {
       return storage.get('/empty.png');
@@ -136,6 +169,7 @@ export const UserStorage = ({ children }: { children: React.ReactNode }) => {
     service,
     course,
     utils,
+    rates,
   };
   return (
     <UserContext.Provider value={context}>{children}</UserContext.Provider>

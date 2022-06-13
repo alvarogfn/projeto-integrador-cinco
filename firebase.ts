@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import * as storage from 'firebase/storage';
 import * as database from 'firebase/database';
-import { getStorage } from 'firebase/storage';
+import * as analytics from 'firebase/analytics';
+import { orderByChild } from 'firebase/database';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCGtGBuS2VufhN5sX0rdx-hBLRO0lgHr4k',
@@ -22,7 +23,6 @@ export const Realtime = () => {
     get: (path: string) => {
       return database.get(database.child(database.ref(databaseInstance), path));
     },
-
     put: async (path: string, form: object) => {
       await database.set(
         database.child(database.ref(databaseInstance), path),
@@ -47,7 +47,7 @@ export const Realtime = () => {
 };
 
 export const Storage = () => {
-  const storageInstance = getStorage(app);
+  const storageInstance = storage.getStorage(app);
   return {
     get: (path: string) => {
       return storage.getDownloadURL(storage.ref(storageInstance, path));
