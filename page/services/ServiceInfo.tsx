@@ -22,7 +22,7 @@ export default function ServiceInfo() {
   > = useRoute();
 
   const [data, setData] = React.useState<serviceType | null>(null);
-  const [id, setId] = React.useState<string | undefined>(() => {
+  const [id] = React.useState<string | undefined>(() => {
     if (typeof route.params?.serviceId === 'string')
       return route.params.serviceId;
     return undefined;

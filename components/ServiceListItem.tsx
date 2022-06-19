@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import { Avatar, Card, IconButton, List } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import { colors } from '../utils/styles';
+import colors from '../utils/colors';
 import { serviceType } from '../utils/types';
 import { stackNavigation } from '../utils/types.navigation';
 
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   label: {
-    color: colors.primary,
+    color: colors.pink,
     fontWeight: '900',
   },
   avatar: {

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import React from 'react';
 import { Appbar } from 'react-native-paper';
-import { colors } from '../utils/styles';
+import colors from '../utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import { stackNavigation } from '../utils/types.navigation';
 
@@ -38,7 +38,7 @@ export default function AppBarEditor({
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.pink,
   },
   text: {
     color: colors.textWhite,

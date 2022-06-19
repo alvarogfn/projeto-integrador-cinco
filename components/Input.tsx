@@ -5,7 +5,7 @@ import {
   HelperText,
 } from 'react-native-paper';
 import MaskInput, { Mask } from 'react-native-mask-input';
-import { colors } from '../utils/styles';
+import colors from '../utils/colors';
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import TitleLabel from './TitleLabel';
@@ -39,11 +39,11 @@ export default function Input({
 }) {
   return (
     <View style={styles.container}>
-      <TitleLabel title={title} />
+      <TitleLabel title={title!} />
       <PaperInput
         mode={mode}
         outlineColor={Colors.grey300}
-        activeOutlineColor={colors.primary}
+        activeOutlineColor={colors.pink}
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
@@ -69,7 +69,7 @@ export default function Input({
           icon ? (
             <PaperInput.Icon
               name={icon}
-              color={colors.primary}
+              color={colors.pink}
               disabled={hasIcon}
             />
           ) : undefined

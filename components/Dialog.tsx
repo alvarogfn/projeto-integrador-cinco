@@ -1,7 +1,7 @@
-import { StyleSheet, Text } from "react-native";
-import React from "react";
-import { Button, Portal, Dialog as PaperDialog } from "react-native-paper";
-import { colors } from "../utils/styles";
+import { StyleSheet, Text } from 'react-native';
+import React from 'react';
+import { Button, Portal, Dialog as PaperDialog } from 'react-native-paper';
+import colors from '../utils/colors';
 
 export default function Dialog({
   status,
@@ -9,6 +9,12 @@ export default function Dialog({
   handleAccept,
   title,
   content,
+}: {
+  status: boolean;
+  onDismiss: () => void;
+  handleAccept: () => void;
+  title: string;
+  content: string;
 }) {
   return (
     <Portal>
@@ -19,7 +25,7 @@ export default function Dialog({
         </PaperDialog.Content>
         <PaperDialog.Actions>
           <Button
-            onPress={() => setDialog(false)}
+            onPress={onDismiss}
             labelStyle={styles.buttonText}
             theme={{ colors: { primary: colors.secondary } }}
           >
@@ -27,8 +33,7 @@ export default function Dialog({
           </Button>
           <Button
             onPress={handleAccept}
-            theme={{ colors: { primary: "#c4c4c4" } }}
-            style={styles.buttonAccept}
+            theme={{ colors: { primary: '#c4c4c4' } }}
             labelStyle={styles.buttonText}
           >
             Sim
@@ -41,10 +46,7 @@ export default function Dialog({
 
 const styles = StyleSheet.create({
   button: {
-    color: "#ffF",
-  },
-  buttonAccept: {
-    color: "#FF0000",
+    color: '#ffF',
   },
   buttonText: {
     paddingVertical: 10,

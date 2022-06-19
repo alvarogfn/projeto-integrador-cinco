@@ -3,7 +3,7 @@ import React from 'react';
 import { Avatar, Colors, Divider, Title } from 'react-native-paper';
 import { UserContext } from '../Context';
 import { rateType } from '../utils/types';
-import { colors } from '../utils/styles';
+import colors from '../utils/colors';
 
 import IconAmountCard from './IconAmountCard';
 
@@ -60,7 +60,7 @@ export default function ServiceComments({ id }: { id: string }) {
                 style={styles.like}
                 size={34}
                 icon="heart"
-                color={colors.primary}
+                color={colors.pink}
               />
             )}
           </View>

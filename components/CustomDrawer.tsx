@@ -7,7 +7,7 @@ import {
   IconButton as ButtonPaper,
 } from 'react-native-paper';
 import { drawerNavigation } from '../utils/types.navigation';
-import { colors } from '../utils/styles';
+import colors from '../utils/colors';
 
 export default function CustomDrawer({
   navigation,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   homeIcon: {
     width: 70,
     height: 70,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.pink,
     borderRadius: 60,
     color: colors.textWhite,
   },
@@ -100,6 +100,6 @@ const styles = StyleSheet.create({
   },
   activeItem: {
     color: Colors.white,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.pink,
   },
 });

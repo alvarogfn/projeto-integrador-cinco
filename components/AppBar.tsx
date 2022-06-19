@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Paper from 'react-native-paper';
 import { StyleSheet } from 'react-native';
-import { colors } from '../utils/styles';
+import colors from '../utils/colors';
 import { DrawerActions } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -21,7 +21,7 @@ export default function AppBar({ title }: { title: string }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.pink,
   },
   text: {
     color: colors.textWhite,

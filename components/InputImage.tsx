@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { Button, Card, Colors } from 'react-native-paper';
-import { colors } from '../utils/styles';
+import colors from '../utils/colors';
 import TitleLabel from './TitleLabel';
 import { useMediaGranting } from '../hooks/useMediaGranting';
 import * as ImagePicker from 'expo-image-picker';
@@ -61,7 +61,7 @@ export default function InputImage({
         <Button
           mode="contained"
           style={styles.cardButton}
-          color={colors.primary}
+          color={colors.pink}
           labelStyle={{ color: Colors.white }}
           onPress={getImage}
         >
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   card: {
     marginTop: 15,
     position: 'relative',
-    borderColor: colors.primary,
+    borderColor: colors.pink,
     borderWidth: 2,
     borderStyle: 'solid',
   },

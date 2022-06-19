@@ -3,9 +3,11 @@ import React from 'react';
 import { Card } from 'react-native-paper';
 import Button from './Button';
 import { useNavigation } from '@react-navigation/native';
+import { courseType } from '../utils/types';
+import { stackNavigation } from '../utils/types.navigation';
 
-export default function CourseListCard({ data }) {
-  const navigation = useNavigation();
+export default function CourseListCard({ data }: { data: courseType }) {
+  const navigation = useNavigation<stackNavigation>();
   return (
     <Card
       elevation={2}
@@ -14,7 +16,7 @@ export default function CourseListCard({ data }) {
         navigation.push('CourseInfo', { courseId: data.id });
       }}
     >
-      <Card.Cover source={{ uri: data.img }} />
+      <Card.Cover source={{ uri: data.img as string }} />
       <Card.Content>
         <Card.Title
           title={data.title}

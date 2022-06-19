@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
 import { Button as PaperButton, Colors } from 'react-native-paper';
-import { colors } from '../utils/styles';
+import colors from '../utils/colors';
 
 export default function Button({
   onPress,
@@ -21,7 +21,7 @@ export default function Button({
       theme={{
         colors: {
           text: Colors.white,
-          primary: colors.primary,
+          primary: colors.pink,
         },
       }}
     >

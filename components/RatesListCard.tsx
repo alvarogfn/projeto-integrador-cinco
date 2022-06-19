@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { rateType } from '../utils/types';
 import { Avatar, Colors, Divider } from 'react-native-paper';
-import { colors } from '../utils/styles';
+import colors from '../utils/colors';
 
 export default function RatesListCard({ rates }: { rates: rateType[] }) {
   if (rates.length === 0) return null;
@@ -32,7 +32,7 @@ export default function RatesListCard({ rates }: { rates: rateType[] }) {
                 style={styles.like}
                 size={34}
                 icon="heart"
-                color={colors.primary}
+                color={colors.pink}
               />
             )}
           </View>

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { Avatar, Card, Colors } from 'react-native-paper';
-import { colors } from '../utils/styles';
+import colors from '../utils/colors';
 
 export default function IconAmountCard({
   amount,
@@ -16,7 +16,7 @@ export default function IconAmountCard({
         style={{ backgroundColor: Colors.transparent }}
         size={34}
         icon={icon}
-        color={colors.primary}
+        color={colors.pink}
       />
       <Text style={{ fontWeight: 'bold', color: Colors.grey600 }}>
         {amount}

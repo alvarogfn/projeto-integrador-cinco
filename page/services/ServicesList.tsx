@@ -6,7 +6,7 @@ import ServiceListItem from '../../components/ServiceListItem';
 import FAB from '../../components/FAB';
 import ActivityIndicator from '../../components/ActivityIndicator';
 import { Title } from 'react-native-paper';
-import { colors } from '../../utils/styles';
+import colors from '../../utils/colors';
 import { context } from '../../utils/types.context';
 import { useNavigation } from '@react-navigation/native';
 import { serviceType } from '../../utils/types';
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   empty: {
-    color: colors.primary,
+    color: colors.pink,
     fontWeight: 'bold',
     padding: 20,
   },

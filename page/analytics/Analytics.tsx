@@ -6,7 +6,7 @@ import { Card, Colors, List, Text, Title } from 'react-native-paper';
 import { rateType, serviceType } from '../../utils/types';
 import IconAmountCard from '../../components/IconAmountCard';
 import TitleLabel from '../../components/TitleLabel';
-import { colors } from '../../utils/styles';
+import colors from '../../utils/colors';
 import RatesListCard from '../../components/RatesListCard';
 
 export default function Analytics() {
@@ -112,7 +112,7 @@ export default function Analytics() {
                     <Card style={styles.card} key={service.id}>
                       <List.Accordion
                         title={service.name}
-                        theme={{ colors: { primary: colors.primary } }}
+                        theme={{ colors: { primary: colors.pink } }}
                         left={(props) => (
                           <List.Icon {...props} icon="comment" />
                         )}

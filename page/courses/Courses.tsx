@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import CoursesList from './CoursesList';
 import CourseEditor from './CourseEditor';
@@ -19,5 +18,3 @@ export default function Courses() {
     </Stack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({});

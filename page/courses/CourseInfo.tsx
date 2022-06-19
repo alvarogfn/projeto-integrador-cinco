@@ -4,7 +4,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { UserContext } from '../../Context';
 import AppBarEditor from '../../components/AppBarEditor';
 import { Card, Colors, Paragraph, Title } from 'react-native-paper';
-import { colors } from '../../utils/styles';
+import colors from '../../utils/colors';
 import useBackHandler from '../../hooks/useBackHandler';
 import { stackNavigation } from '../../utils/types.navigation';
 import { courseType } from '../../utils/types';
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    color: colors.primary,
+    color: colors.pink,
     fontWeight: 'bold',
     marginVertical: 7,
   },
